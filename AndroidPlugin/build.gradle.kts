@@ -22,4 +22,8 @@ gradlePlugin {
         id = "android-lib-basic-plugin"
         implementationClass = "com.basic.android.AndroidLibBasicPlugin"
     }
+    plugins.register("standard-dependencies-plugin") {
+        id = "standard-dependencies-plugin"
+        implementationClass = "com.basic.android.AndroidStandardDependenciesPlugin"
+    }
 }
