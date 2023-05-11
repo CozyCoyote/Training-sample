@@ -1,6 +1,7 @@
 package com.cosy.coyote.training.sample
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,9 +19,21 @@ fun MainNavigation(
         })
     }
     composable("stepper") {
-        Step1()
+        Step1(goToStep2 = {
+            navController.navigate("step2")
+        }, goBack = {
+            navController.navigateBack()
+        })
     }
     composable("step2") {
-        Step2()
+        Step2(goBack = {
+            navController.navigateBack()
+        })
+    }
+}
+
+private fun NavController.navigateBack() {
+    if (backQueue.size > 2) {
+        popBackStack()
     }
 }

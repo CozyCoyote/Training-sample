@@ -7,17 +7,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
+import com.cosy.coyote.training.sample.R
 import com.cosy.coyote.training.sample.components.Toolbar
 
 @Composable
-fun Step1()= Scaffold(
-    topBar = { Toolbar("Stepper") }
+fun Step1(
+    goToStep2: () -> Unit,
+    goBack: () -> Unit,
+) = Scaffold(
+    topBar = { Toolbar("Stepper", R.drawable.ic_back, goBack) }
 ) {
-    val nav = rememberNavController()
     Box(modifier = Modifier.padding(it)) {
         Text(text = "Step 1", Modifier.clickable {
-            nav.navigate("step2")
+            goToStep2()
         })
     }
 }

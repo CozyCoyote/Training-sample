@@ -3,8 +3,6 @@ package com.cosy.coyote.training.sample
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +16,8 @@ class MainViewModel : ViewModel() {
     private val _viewState = MutableStateFlow<ViewState>(ViewState.Loading)
     val viewState: StateFlow<ViewState> = _viewState
 
-    private val _viewAction = Channel<ViewAction>()
-    val viewAction: ReceiveChannel<ViewAction> = _viewAction
+    private val _viewAction = MutableSharedFlow<ViewAction>()
+    val viewAction: SharedFlow<ViewAction> = _viewAction
 
     init {
         viewModelScope.launch {
@@ -29,7 +27,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun nextClicked() {
-        _viewAction.trySend(ViewAction.NavigateToStepper)
+        viewModelScope.launch {
+            _viewAction.emit(ViewAction.NavigateToStepper)
+        }
     }
 
     private suspend fun getData() = withContext(Dispatchers.IO) {
