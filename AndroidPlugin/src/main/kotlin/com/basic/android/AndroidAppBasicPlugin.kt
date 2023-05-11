@@ -7,8 +7,7 @@ import org.gradle.api.Project
 @Suppress("Unused")
 class AndroidAppBasicPlugin: Plugin<Project> {
     override fun apply(target: Project) {
-        println("basic android app plugin logs")
-
+        println("basic android app plugin apply logs")
         target.apply {
             plugin("com.android.application")
             plugin("org.jetbrains.kotlin.android")
@@ -19,5 +18,3 @@ class AndroidAppBasicPlugin: Plugin<Project> {
         }
     }
 }
-
-

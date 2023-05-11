@@ -13,4 +13,6 @@
 /captures
 .externalNativeBuild
 .cxx
+app_secrets.properties
+app_secrets.hash
 local.properties

@@ -11,6 +11,7 @@ plugins {
 dependencies {
     implementation("com.android.tools.build:gradle:8.0.1")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
+//    implementation("com.cherryperry.gfe:gradle-file-encrypt:2.0.3")
 }
 
 gradlePlugin {
@@ -25,5 +26,9 @@ gradlePlugin {
     plugins.register("standard-dependencies-plugin") {
         id = "standard-dependencies-plugin"
         implementationClass = "com.basic.android.AndroidStandardDependenciesPlugin"
+    }
+    plugins.register("secrets-check-plugin") {
+        id = "secrets-check-plugin"
+        implementationClass = "com.basic.android.SecretsCheckPlugin"
     }
 }

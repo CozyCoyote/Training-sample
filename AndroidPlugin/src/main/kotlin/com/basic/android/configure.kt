@@ -2,6 +2,7 @@ package com.basic.android
 
 import com.android.build.gradle.TestedExtension
 import org.gradle.api.JavaVersion
+import org.gradle.api.plugins.ExtensionAware
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 fun TestedExtension.configure() {
@@ -16,7 +17,7 @@ fun TestedExtension.configure() {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    (this as org.gradle.api.plugins.ExtensionAware).extensions.configure(KotlinJvmOptions::class.java) {
+    (this as ExtensionAware).extensions.configure(KotlinJvmOptions::class.java) {
         jvmTarget = "1.8"
     }
 }

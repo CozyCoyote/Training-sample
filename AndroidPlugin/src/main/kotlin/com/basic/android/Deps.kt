@@ -16,12 +16,14 @@ fun Project.applyDependencies(deps: List<String>) = with(dependencies) {
             Deps.APP_COMPAT -> {
                 add("implementation", "androidx.core:core-ktx:1.10.0")
                 add("implementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-                add("implementation", "androidx.activity:activity-compose:1.7.1")
             }
             Deps.COMPOSE -> {
+                add("implementation", "androidx.activity:activity-compose:1.7.1")
+                add("implementation", "androidx.lifecycle:lifecycle-runtime-compose:1.7.1")
                 add("implementation", "androidx.compose.ui:ui:$compose_version")
                 add("implementation", "androidx.compose.ui:ui-tooling-preview:$compose_version")
                 add("implementation", "androidx.compose.material3:material3:1.1.0-rc01")
+                add("implementation", "androidx.navigation:navigation-compose:2.5.3")
                 add("debugImplementation", "androidx.compose.ui:ui-tooling:$compose_version")
                 add("debugImplementation", "androidx.compose.ui:ui-test-manifest:$compose_version")
             }
