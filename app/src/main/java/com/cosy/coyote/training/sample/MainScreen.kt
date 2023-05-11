@@ -14,21 +14,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.cosy.coyote.training.sample.components.Toolbar
+import com.cosy.coyote.training.sample.ui.theme.TrainingSampleTheme
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 
 @Composable
 fun MainScreen(
-    navHostController: NavHostController,
+    goToStepper: () -> Unit,
     vm: MainViewModel = viewModel(),
 ) {
 
-    println("redraw -- main screen")
+    println("redraw all")
+
 
     MainScreenLayout(
         status = {
-            println("redraw -- status")
             val viewState by vm.viewState.collectAsStateWithLifecycle()
             when (viewState) {
                 is MainViewModel.ViewState.Loading -> "Data is loading"
@@ -37,7 +38,16 @@ fun MainScreen(
         },
         acknowledge = "Tutorial body",
         nextClicked = {
-            navHostController.navigate("stepper")
+            vm.nextClicked()
+        },
+        viewState = {
+            val viewAction by vm.viewAction.consumeAsFlow().collectAsStateWithLifecycle(
+                initialValue = MainViewModel.ViewAction.None
+            )
+            when (viewAction) {
+                is MainViewModel.ViewAction.NavigateToStepper -> goToStepper()
+                is MainViewModel.ViewAction.None -> { /* nothing to do here */ }
+            }
         }
     )
 }
@@ -47,17 +57,15 @@ private fun MainScreenLayout(
     status: @Composable () -> String,
     acknowledge: String,
     nextClicked: () -> Unit,
+    viewState: @Composable () -> Unit,
 ) = Scaffold(
-    topBar = {
-        println("redraw -- toolbar")
-        Toolbar("Main screen") }
+    topBar = { Toolbar("Main screen") }
 ) { actionbarPadding ->
     Column(
         modifier = Modifier
             .padding(actionbarPadding)
             .fillMaxSize()
     ) {
-        println("redraw -- column")
         Text(text = status(), Modifier.padding(horizontal = 16.dp, vertical = 16.dp))
         Text(text = acknowledge, Modifier.padding(horizontal = 16.dp))
         Button(
@@ -67,12 +75,20 @@ private fun MainScreenLayout(
                 .padding(top = 16.dp)
         ) {
             Text(text = "Next page")
+            viewState()
         }
     }
 }
 
 @Preview
 @Composable
-fun preview() {
-    MainScreen(rememberNavController())
+private fun preview() {
+    TrainingSampleTheme {
+        MainScreenLayout(
+            status = { "Data is loading" },
+            acknowledge = "Tutorial body",
+            nextClicked = {},
+            viewState = {},
+        )
+    }
 }

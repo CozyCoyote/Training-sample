@@ -13,7 +13,9 @@ fun MainNavigation(
     navController: NavHostController = rememberNavController()
 ) = NavHost(navController = navController, startDestination = "main_screen") {
     composable("main_screen") {
-        MainScreen(navController)
+        MainScreen(goToStepper = {
+            navController.navigate("stepper")
+        })
     }
     composable("stepper") {
         Step1()
