@@ -6,8 +6,8 @@ plugins {
     id("android-app-basic-plugin")
     id("java-basic-plugin")
     id("standard-dependencies-plugin")
-    id("com.cherryperry.gradle-file-encrypt")
-    id("secrets-check-plugin")
+//    id("com.cherryperry.gradle-file-encrypt")
+//    id("secrets-check-plugin")
 }
 
 android {
@@ -26,16 +26,17 @@ android {
     }
 }
 
-gradleFileEncrypt {
-    val files = readListProperty(SECRET_FILES_ARGUMENT).map { "$it.properties" }
-    println(files)
-    plainFiles.from(*files.toTypedArray())
-    passwordProvider.set {
-        return@set (findProperty(SECRET_PASSWORD_ARGUMENT) as String).toCharArray()
-    }
-}
-
-tasks.findByPath("encryptFiles")?.setFinalizedBy(listOf("createSecretHashFiles"))
+// encryption does not work at this time
+//gradleFileEncrypt {
+//    val files = readListProperty(SECRET_FILES_ARGUMENT).map { "$it.properties" }
+//    println(files)
+//    plainFiles.from(*files.toTypedArray())
+//    passwordProvider.set {
+//        return@set (findProperty(SECRET_PASSWORD_ARGUMENT) as String).toCharArray()
+//    }
+//}
+//
+//tasks.findByPath("encryptFiles")?.setFinalizedBy(listOf("createSecretHashFiles"))
 
 applyStandardDependencies {
     add { listOf(APP_COMPAT, COMPOSE, TEST) }
