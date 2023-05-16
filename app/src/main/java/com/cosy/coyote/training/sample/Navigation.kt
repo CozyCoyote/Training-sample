@@ -2,37 +2,38 @@ package com.cosy.coyote.training.sample
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.NavDeepLink
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.cosy.coyote.training.sample.stepper.Step1
-import com.cosy.coyote.training.sample.stepper.Step2
+import com.cosy.coyote.training.sample.settings.SettingsScreen
+import com.cosy.coyote.training.sample.stepper.includeStepperGraph
 
 @Composable
 fun MainNavigation(
     navController: NavHostController = rememberNavController()
 ) = NavHost(navController = navController, startDestination = "main_screen") {
     composable("main_screen") {
-        MainScreen(goToStepper = {
-            navController.navigate("stepper")
-        })
+        MainScreen(
+            goToStepper = { navController.navigate("stepper") },
+            goToSettings = { navController.navigate("settings") }
+        )
     }
-    composable("stepper") {
-        Step1(goToStep2 = {
-            navController.navigate("step2")
-        }, goBack = {
+    composable(
+        "settings",
+        deepLinks = listOf(createIntentFilter("android.intent.action.APPLICATION_PREFERENCES"))
+    ) {
+        SettingsScreen(goBack = {
             navController.navigateBack()
         })
     }
-    composable("step2") {
-        Step2(goBack = {
-            navController.navigateBack()
-        })
-    }
+    includeStepperGraph(navController)
 }
 
-private fun NavController.navigateBack() {
+private fun createIntentFilter(action: String) = NavDeepLink.Builder().setAction(action).build()
+
+fun NavController.navigateBack() {
     if (backQueue.size > 2) {
         popBackStack()
     }

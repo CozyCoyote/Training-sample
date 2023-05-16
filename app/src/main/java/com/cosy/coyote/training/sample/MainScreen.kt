@@ -1,5 +1,6 @@
 package com.cosy.coyote.training.sample
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,15 +29,22 @@ import com.cosy.coyote.training.sample.ui.theme.TrainingSampleTheme
 @Composable
 fun MainScreen(
     goToStepper: () -> Unit,
+    goToSettings: () -> Unit,
     vm: MainViewModel = viewModel(),
 ) {
 
+    val context = LocalContext.current
     vm.viewAction.collectAsEffect(block = {
         when (it) {
-            is MainViewModel.ViewAction.NavigateToStepper -> goToStepper()
-            is MainViewModel.ViewAction.None -> {
-                // nothing to do here
+            is MainViewModel.ViewAction.DataNotLoaded -> {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.data_loading),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+            is MainViewModel.ViewAction.NavigateToStepper -> goToStepper()
+            is MainViewModel.ViewAction.NavigateToSettings -> goToSettings()
         }
     })
 
@@ -51,6 +60,9 @@ fun MainScreen(
         nextClicked = {
             vm.nextClicked()
         },
+        settingsClicked = {
+            vm.settingsClicked()
+        }
     )
 }
 
@@ -59,8 +71,14 @@ private fun MainScreenLayout(
     status: @Composable () -> String,
     acknowledge: String,
     nextClicked: () -> Unit,
+    settingsClicked: () -> Unit,
 ) = Scaffold(
-    topBar = { Toolbar("Main screen") }
+    topBar = { Toolbar(
+        "Main screen",
+        actions = listOf(R.drawable.ic_settings to {
+            settingsClicked()
+        })
+    ) }
 ) { actionbarPadding ->
     Column(
         modifier = Modifier
@@ -98,6 +116,7 @@ private fun preview() {
             status = { "Data is loading" },
             acknowledge = "Tutorial body",
             nextClicked = {},
+            settingsClicked = {},
         )
     }
 }

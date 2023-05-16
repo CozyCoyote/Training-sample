@@ -28,12 +28,24 @@ class MainViewModel : ViewModel() {
 
     fun nextClicked() {
         viewModelScope.launch {
-            _viewAction.emit(ViewAction.NavigateToStepper)
+            _viewAction.emit(
+                if (_viewState.value == ViewState.Loading) {
+                    ViewAction.DataNotLoaded
+                } else {
+                    ViewAction.NavigateToStepper
+                }
+            )
+        }
+    }
+
+    fun settingsClicked() {
+        viewModelScope.launch {
+            _viewAction.emit(ViewAction.NavigateToSettings)
         }
     }
 
     private suspend fun getData() = withContext(Dispatchers.IO) {
-        delay(2000L)
+        delay(5000L)
         "backend data"
     }
 
@@ -43,8 +55,9 @@ class MainViewModel : ViewModel() {
     }
 
     sealed class ViewAction {
-        object None : ViewAction()
+        object DataNotLoaded : ViewAction()
         object NavigateToStepper : ViewAction()
+        object NavigateToSettings : ViewAction()
     }
 
 }

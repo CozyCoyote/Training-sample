@@ -1,6 +1,5 @@
 package com.cosy.coyote.training.sample.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +20,7 @@ fun Toolbar(
     title: String,
     homeIcon: Int = R.drawable.ic_forest,
     homeClick: () -> Unit = {},
+    actions: List<Pair<Int, () -> Unit>> = emptyList(),
 ) = TopAppBar(
     title = { Text(title) },
     navigationIcon = {
@@ -32,6 +32,17 @@ fun Toolbar(
                 contentDescription = "none",
                 tint = Color(0xFF008800)
             )
+        }
+    },
+    actions = {
+        actions.forEach {
+            IconButton(onClick = { it.second.invoke() }) {
+                Icon(
+                    painter = painterResource(it.first),
+                    contentDescription = "none",
+                    tint = Color(0xFF008800)
+                )
+            }
         }
     },
     colors = TopAppBarDefaults.topAppBarColors(
