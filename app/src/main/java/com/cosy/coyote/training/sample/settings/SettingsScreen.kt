@@ -10,6 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cosy.coyote.training.sample.R
 import com.cosy.coyote.training.sample.components.Toolbar
+import com.cosy.coyote.training.sample.data.Repo
+import com.cosy.coyote.training.sample.data.SessionHolder
 import com.cosy.coyote.training.sample.ui.theme.TrainingSampleTheme
 
 @Composable
@@ -29,6 +31,7 @@ private fun SettingsLayout(homeClick: () -> Unit) = Scaffold(
     Box(modifier = Modifier.padding(it)) {
         Text("my app settings")
     }
+    val repo: Repo = SessionHolder.get()
 }
 
 @Preview

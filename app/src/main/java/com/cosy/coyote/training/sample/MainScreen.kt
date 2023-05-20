@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cosy.coyote.training.sample.components.Toolbar
 import com.cosy.coyote.training.sample.components.collectAsEffect
 import com.cosy.coyote.training.sample.ui.theme.TrainingSampleTheme
+import com.sample.internal.lib.RequiresAttention
 
 @Composable
 fun MainScreen(

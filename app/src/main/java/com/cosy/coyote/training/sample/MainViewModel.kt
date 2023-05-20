@@ -2,6 +2,7 @@ package com.cosy.coyote.training.sample
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sample.internal.lib.RequiresAttention
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +18,7 @@ class MainViewModel : ViewModel() {
     val viewState: StateFlow<ViewState> = _viewState
 
     private val _viewAction = MutableSharedFlow<ViewAction>()
+    @RequiresAttention("view actions should not be observed as states")
     val viewAction: SharedFlow<ViewAction> = _viewAction
 
     init {

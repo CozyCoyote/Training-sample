@@ -17,6 +17,11 @@
                   <project path="$PROJECT_DIR$/JavaPlugin" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/InternalLibrary" name="InternalLibrary">
+                <projects>
+                  <project path="$PROJECT_DIR$/InternalLibrary" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -27,6 +32,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AndroidPlugin" />
+            <option value="$PROJECT_DIR$/InternalLibrary" />
             <option value="$PROJECT_DIR$/JavaPlugin" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />

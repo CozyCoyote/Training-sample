@@ -6,6 +6,7 @@ plugins {
     id("android-app-basic-plugin")
     id("java-basic-plugin")
     id("standard-dependencies-plugin")
+    id("com.google.devtools.ksp") version "1.8.20-1.0.11"
 //    id("com.cherryperry.gradle-file-encrypt")
 //    id("secrets-check-plugin")
 }
@@ -24,6 +25,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
 }
 
 // encryption does not work at this time
@@ -40,4 +46,10 @@ android {
 
 applyStandardDependencies {
     add { listOf(APP_COMPAT, COMPOSE, TEST) }
+}
+
+dependencies {
+    implementation(":InternalLibrary")
+    implementation(":InternalLibrary")
+    ksp(":InternalLibrary")
 }
