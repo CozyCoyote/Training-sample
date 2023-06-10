@@ -17,6 +17,7 @@ dependencyResolutionManagement {
 includeBuild('AndroidPlugin')
 includeBuild('JavaPlugin')
 includeBuild('InternalLibrary')
+includeBuild('SessionProcessor')
 
 rootProject.name = "Training sample"
 include ':app'

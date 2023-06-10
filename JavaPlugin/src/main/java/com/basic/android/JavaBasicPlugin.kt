@@ -6,7 +6,6 @@ import org.gradle.api.Project
 class JavaBasicPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         println("basic plugin logs")
-        println("=====================")
     }
 }
 

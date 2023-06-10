@@ -22,6 +22,11 @@
                   <project path="$PROJECT_DIR$/InternalLibrary" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/SessionProcessor" name="SessionProcessor">
+                <projects>
+                  <project path="$PROJECT_DIR$/SessionProcessor" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -34,6 +39,7 @@
             <option value="$PROJECT_DIR$/AndroidPlugin" />
             <option value="$PROJECT_DIR$/InternalLibrary" />
             <option value="$PROJECT_DIR$/JavaPlugin" />
+            <option value="$PROJECT_DIR$/SessionProcessor" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />
           </set>

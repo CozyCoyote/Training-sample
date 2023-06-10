@@ -7,6 +7,9 @@ import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
+import com.google.devtools.ksp.symbol.KSType
+import com.google.devtools.ksp.symbol.KSTypeArgument
+import com.google.devtools.ksp.symbol.KSTypeReference
 import java.io.OutputStreamWriter
 
 class SessionProcessor(
@@ -59,16 +62,29 @@ class SessionProcessor(
             packageName,
             fileName
         ).use { stream ->
+
+            val classAndInterfaces = annotatedFiles.map {
+                val objectInterface = (it.annotations.find { annotation ->
+                    annotation.shortName.getShortName() == "SessionScoped"
+                }?.arguments?.first()?.value as KSType).declaration
+                it to objectInterface
+            }
+
             OutputStreamWriter(stream).use { writer ->
                 // writer is way faster than string builder / concatenation (~10ms vs ~300ms)
                 writer.write("package $packageName\n\n")
 
-                annotatedFiles.forEach {
-                    writer.write("import " + it.containingFile!!.packageName.asString() + "." + it.toString() + "\n")
+                classAndInterfaces.forEach {
+                    it.second.accept(SessionDataWrapperCreator(it.first, codegen, logger), Unit)
+                    writer.write("import ${(it.second.qualifiedName?.asString())}\n")
+                    writer.write("import ${(it.second.qualifiedName?.asString())}Wrapper\n")
+                    writer.write("import com.sample.internal.lib.SessionLifecycleAware\n")
                 }
+                writer.write("import kotlin.reflect.KClass\n")
                 writer.write("\nobject $fileName {\n")
 
-                writer.write("""
+                writer.write(
+                    """
     val cache = mutableMapOf<String, Any>()
 
     inline fun <reified T: Any> get(): T {
@@ -76,20 +92,25 @@ class SessionProcessor(
         if (cache.containsKey(name)) {
             return cache[name] as T
         } else {
-            val temp = init<T>(name)
+            val temp = init<T>(T::class)
             cache[name] = temp
             return temp
         }
     }
 
-    fun clear() = cache.clear()
+    fun clear() {
+        cache.values.forEach {
+            (it as SessionLifecycleAware).clear()
+        }
+        cache.clear()
+    }
 
-    fun <T : Any> init(name: String): T {
+    inline fun <reified T : Any> init(name: KClass<T>): T {
         return when (name) {
 """
                 )
-                annotatedFiles.forEach {
-                    writer.write("            $it::class.simpleName -> $it() as T\n")
+                classAndInterfaces.forEach {
+                    writer.write("            ${it.second}::class -> ${it.second}Wrapper() as T\n")
                 }
                 writer.write("            else -> TODO(\"\$name is not part of the session\")\n")
                 writer.write("        }\n")
@@ -98,4 +119,12 @@ class SessionProcessor(
             }
         }
     }
+}
+
+fun KSTypeReference?.canonicalName(): String? {
+    return this?.resolve()?.declaration?.qualifiedName?.asString()
+}
+
+fun List<KSTypeArgument>.mapToNames(): List<String> {
+    return mapNotNull { it.type.canonicalName() }
 }
