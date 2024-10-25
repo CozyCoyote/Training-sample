@@ -33,7 +33,7 @@ jobs:
     # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+      uses: gradle/actions/setup-gradle@v4
       with:
         gradle-version: wrapper
 
@@ -42,6 +42,14 @@ jobs:
 
     - name: Run tests
       run: ./gradlew test
+
+    - name: Test report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: JUnit Tests            # Name of the check run which will be created
+          path: app/test-results/TEST-*.xml    # Path to test results
+          reporter: junit
 
     - name: Lint app
       run: ./gradlew lint
