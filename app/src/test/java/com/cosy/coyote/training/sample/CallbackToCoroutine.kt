@@ -2,6 +2,7 @@ package com.cosy.coyote.training.sample
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.test.runTest
@@ -23,6 +24,7 @@ class CallbackToCoroutine {
                 this.trySend("element 2")
                 this.close()
             }
+            awaitClose()
         }
 
         flow.collect {
@@ -39,6 +41,7 @@ class CallbackToCoroutine {
                 this.trySend("element 2")
                 this.close()
             }
+            awaitClose()
         }
 
         flow.collect {
@@ -55,6 +58,7 @@ class CallbackToCoroutine {
                 this.trySend("element 2")
                 this.close()
             }
+            awaitClose()
         }
 
         flow.collect {

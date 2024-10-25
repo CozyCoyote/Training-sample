@@ -3,7 +3,7 @@ repositories {
 }
 
 plugins {
-    id("org.gradle.kotlin.kotlin-dsl") version "4.0.7"
+    id("org.gradle.kotlin.kotlin-dsl") version "5.1.2"
     id("java-gradle-plugin")
 }
 

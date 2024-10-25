@@ -12,14 +12,14 @@
                   <project path="$PROJECT_DIR$/AndroidPlugin" />
                 </projects>
               </build>
-              <build path="$PROJECT_DIR$/JavaPlugin" name="JavaPlugin">
-                <projects>
-                  <project path="$PROJECT_DIR$/JavaPlugin" />
-                </projects>
-              </build>
               <build path="$PROJECT_DIR$/InternalLibrary" name="InternalLibrary">
                 <projects>
                   <project path="$PROJECT_DIR$/InternalLibrary" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/JavaPlugin" name="JavaPlugin">
+                <projects>
+                  <project path="$PROJECT_DIR$/JavaPlugin" />
                 </projects>
               </build>
               <build path="$PROJECT_DIR$/SessionProcessor" name="SessionProcessor">
@@ -30,9 +30,8 @@
             </builds>
           </compositeBuild>
         </compositeConfiguration>
-        <option name="testRunner" value="GRADLE" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -44,6 +43,7 @@
             <option value="$PROJECT_DIR$/data" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

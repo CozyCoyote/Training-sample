@@ -3,6 +3,7 @@ plugins {
 //    id("java-basic-plugin")
     id("standard-dependencies-plugin")
     id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.compose")
 //    id("com.cherryperry.gradle-file-encrypt")
 //    id("secrets-check-plugin")
 }
@@ -14,7 +15,7 @@ applyAndroidPlugin.settings {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.7.0"
     }
 }
 
