@@ -44,12 +44,12 @@ jobs:
       run: ./gradlew test
 
     - name: Test report
+      if: always()
       uses: dorny/test-reporter@v1
-      if: success() || failure()    # run this step even if previous step failed
-        with:
-          name: JUnit Tests            # Name of the check run which will be created
-          path: app/test-results/TEST-*.xml    # Path to test results
-          reporter: junit
+      with:
+        name: JUnit Tests
+        path: app/test-results/TEST-*.xml
+        reporter: java-junit
 
     - name: Lint app
       run: ./gradlew lint
