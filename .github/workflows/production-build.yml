@@ -48,7 +48,7 @@ jobs:
       uses: dorny/test-reporter@v1
       with:
         name: JUnit Tests
-        path: app/build/test-results/TEST-*.xml
+        path: app/build/test-results/*/TEST-*.xml
         reporter: java-junit
 
     - name: Lint app
