@@ -17,6 +17,11 @@ applyAndroidPlugin.settings {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.7.0"
     }
+    testOptions {
+        unitTests.all {
+            it.useJUnit()
+        }
+    }
 }
 
 // encryption does not work at this time
