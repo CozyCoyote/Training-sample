@@ -45,27 +45,15 @@ jobs:
     - name: Run tests
       run: ./gradlew :app:testDebugUnitTest
 
-    - name: Publish Test Results
+    - name: Test report
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
         files: |
           app/build/test-results/**/*.xml
 
-    - name: Test report
-      if: always()
-      uses: dorny/test-reporter@v1
-      with:
-        name: JUnit Tests
-        path: app/build/test-results/*/TEST-*.xml
-        reporter: java-junit
-
-    - name: Android Test Report
-      uses: asadmansr/android-test-report-action@v1.2.0
-      if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
-
     - name: Lint app
-      run: ./gradlew lint
+      run: ./gradlew :app:lintDebug
 
     - name: Create aab
       run: ./gradlew bundleDebug

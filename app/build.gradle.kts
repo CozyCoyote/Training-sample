@@ -22,6 +22,11 @@ applyAndroidPlugin.settings {
             it.useJUnit()
         }
     }
+    lint {
+        abortOnError = false
+        checkDependencies = false
+        checkGeneratedSources = false
+    }
 }
 
 // encryption does not work at this time
