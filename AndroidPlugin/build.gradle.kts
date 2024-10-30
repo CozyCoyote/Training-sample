@@ -9,7 +9,7 @@ plugins {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:8.5.2")
+    implementation("com.android.tools.build:gradle:8.6.1")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21")
 //    implementation("com.cherryperry.gfe:gradle-file-encrypt:2.0.3")
 }
